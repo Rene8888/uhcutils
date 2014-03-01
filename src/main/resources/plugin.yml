@@ -1,0 +1,10 @@
+name: UHCutils
+version: 1.0
+description: UHCutils Plugin
+author: EXSolo
+main: com.exsoloscript.uhcutils.UHCutils
+database: false
+commands:
+  canjoin:
+    usage: /canjoin
+    description: Shows how many players can join
