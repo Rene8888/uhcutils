@@ -1,8 +1,6 @@
 package com.exsoloscript.uhcutils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,14 +37,6 @@ public class UHCutils extends JavaPlugin {
 		getCommand("canjoin").setExecutor(new JoinCommands(this));
 	}
 
-	public static int playersCanJoin() {
-		int mortals = 0;
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			if (!p.isOp()) mortals++;
-		}
-		return mortals;
-	}
-	
 	public static String prefix() {
 		return ChatColor.AQUA + "[UHCu] " + ChatColor.GOLD;
 	}
