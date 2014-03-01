@@ -8,3 +8,9 @@ commands:
   canjoin:
     usage: /canjoin
     description: Shows how many players can join
+  whitelistall:
+    usage: /whitelistall [clear]
+    description: whitelists all players
+  byebye:
+    usage: /byebye <playerName>
+    description: bans a player
