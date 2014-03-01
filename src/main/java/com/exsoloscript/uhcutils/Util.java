@@ -1,5 +1,7 @@
 package com.exsoloscript.uhcutils;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -12,6 +14,15 @@ public class Util {
 				mortals++;
 		}
 		return mortals;
+	}
+
+	public Player getPlayerByUUID(UUID uuid) {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if (p.getUniqueId().equals(uuid)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 }
