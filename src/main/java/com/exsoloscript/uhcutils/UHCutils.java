@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.exsoloscript.player.UHCPlayerManager;
 import com.exsoloscript.uhcutils.cmd.JoinCommands;
 import com.exsoloscript.uhcutils.event.LoginListener;
+import com.exsoloscript.uhcutils.team.Teams;
 
 public class UHCutils extends JavaPlugin {
 
