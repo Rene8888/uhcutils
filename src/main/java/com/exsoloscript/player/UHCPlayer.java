@@ -95,10 +95,6 @@ public class UHCPlayer implements Player {
 		return player.getCompassTarget();
 	}
 
-	public void setCommpassTarget(Location l) {
-		player.setCompassTarget(l);
-	}
-
 	public InetSocketAddress getAddress() {
 		return player.getAddress();
 	}
@@ -319,11 +315,6 @@ public class UHCPlayer implements Player {
 	}
 
 	public void setLastDamage(double arg0) {
-		player.setLastDamage(arg0);
-	}
-
-	@Deprecated
-	public void setLastDamage(int arg0) {
 		player.setLastDamage(arg0);
 	}
 

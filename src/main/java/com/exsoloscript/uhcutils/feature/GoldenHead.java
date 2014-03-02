@@ -24,12 +24,13 @@ public class GoldenHead extends Feature {
 		super(defaultEnabled, name, desc);
 	}
 
-	@SuppressWarnings("deprecation")
 	public void enable() {
 		ShapedRecipe recipe = new ShapedRecipe(getGoldenHead());
 		recipe.shape(new String[] { "AAA", "ABA", "AAA" });
 		recipe.setIngredient('A', Material.GOLD_INGOT);
-		recipe.setIngredient('B', Material.SKULL_ITEM, 3);
+		ItemStack skull = new ItemStack(Material.SKULL_ITEM);
+		skull.setDurability((short) 3);
+		recipe.getIngredientMap().put('B', skull);
 		Bukkit.addRecipe(recipe);
 	}
 
