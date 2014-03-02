@@ -63,7 +63,7 @@ public class Teams {
 			if (isUHCTeam(t)) {
 				for (OfflinePlayer p : t.getPlayers()) {
 					t.removePlayer(p);
-					p.getPlayer().sendMessage(UHCutils.prefix() + "Your team was enptied!");
+					p.getPlayer().sendMessage(UHCutils.prefix() + "Your team was emptied!");
 				}
 			}
 		}
