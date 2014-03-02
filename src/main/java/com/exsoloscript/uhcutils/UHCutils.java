@@ -32,14 +32,6 @@ public class UHCutils extends JavaPlugin {
 
 	}
 
-	public static UHCPlayerManager getUHCPlayerManager() {
-		return UHC_PLAYER_MANAGER;
-	}
-
-	public static Teams getTeams() {
-		return UHC_TEAMS;
-	}
-
 	private void loadConfig() {
 		this.getConfig().addDefault("config.max-players", 30);
 	}
@@ -55,6 +47,14 @@ public class UHCutils extends JavaPlugin {
 
 	public static String prefix() {
 		return ChatColor.AQUA + "[UHCu] " + ChatColor.GOLD;
+	}
+
+	public static UHCPlayerManager getUHCPlayerManager() {
+		return UHC_PLAYER_MANAGER;
+	}
+
+	public static Teams getTeams() {
+		return UHC_TEAMS;
 	}
 
 }
