@@ -16,7 +16,7 @@ public class Util {
 		return mortals;
 	}
 
-	public Player getPlayerByUUID(UUID uuid) {
+	public static Player getPlayerByUUID(UUID uuid) {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.getUniqueId().equals(uuid)) {
 				return p;
