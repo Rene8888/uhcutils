@@ -13,10 +13,12 @@ public class UHCutils extends JavaPlugin {
 	public static int maxPlayers = 0;
 
 	private static UHCPlayerManager UHC_PLAYER_MANAGER;
+	private static Teams UHC_TEAMS;
 
 	public void onEnable() {
 
 		UHC_PLAYER_MANAGER = new UHCPlayerManager(this);
+		UHC_TEAMS = new Teams();
 
 		loadConfig();
 		registerEvents();
@@ -32,6 +34,10 @@ public class UHCutils extends JavaPlugin {
 
 	public static UHCPlayerManager getUHCPlayerManager() {
 		return UHC_PLAYER_MANAGER;
+	}
+
+	public static Teams getTeams() {
+		return UHC_TEAMS;
 	}
 
 	private void loadConfig() {
