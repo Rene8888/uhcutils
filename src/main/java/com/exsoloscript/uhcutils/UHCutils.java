@@ -44,7 +44,7 @@ public class UHCutils extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		getCommand("canjoin").setExecutor(new JoinCommands(this));
+		new JoinCommands(this);
 	}
 
 	public static String prefix() {
