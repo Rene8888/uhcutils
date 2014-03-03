@@ -1,15 +1,21 @@
 package com.exsoloscript.uhcutils.team;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 
 import com.exsoloscript.player.UHCPlayer;
 
-public class Team {
+public class Team implements Externalizable {
 
 	private int teamnr;
 	private ArrayList<UHCPlayer> players;
 
 	private int maxTeamMemberCount;
+
+	private String color;
 
 	public Team(int teamnr) {
 		this.teamnr = teamnr;
@@ -87,5 +93,34 @@ public class Team {
 		} else {
 			return false;
 		}
+	}
+
+	public String getTeamColor() {
+		return this.color;
+	}
+
+	public void setTeamColor(String color) {
+		this.color = color;
+	}
+
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeInt(teamnr);
+		out.writeInt(this.players.size());
+		for (UHCPlayer player : this.players) {
+			out.writeObject(player);
+		}
+		out.writeInt(this.maxTeamMemberCount);
+		out.writeUTF(this.color);
+	}
+
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		this.teamnr = in.readInt();
+		int playersLength = in.readInt();
+		this.players = new ArrayList<UHCPlayer>(playersLength);
+		for (int i = 0; i < playersLength; i++) {
+			this.players.add((UHCPlayer) in.readObject());
+		}
+		this.maxTeamMemberCount = in.readInt();
+		this.color = in.readUTF();
 	}
 }
