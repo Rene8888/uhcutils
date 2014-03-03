@@ -14,6 +14,7 @@ public class UHCutils extends JavaPlugin {
 
 	public static int maxPlayers = 0;
 
+	private static UHCutils CURRENT_UHCUTILS_INSTANCE;
 	private static UHCPlayerManager UHC_PLAYER_MANAGER;
 	private static Teams UHC_TEAMS;
 
@@ -22,6 +23,7 @@ public class UHCutils extends JavaPlugin {
 
 	public void onEnable() {
 
+		CURRENT_UHCUTILS_INSTANCE = this;
 		UHC_PLAYER_MANAGER = new UHCPlayerManager(this);
 		UHC_TEAMS = new Teams();
 
@@ -58,6 +60,10 @@ public class UHCutils extends JavaPlugin {
 
 	public static String prefix() {
 		return ChatColor.AQUA + "[UHCu] " + ChatColor.GOLD;
+	}
+
+	public static UHCutils getUHCutils() {
+		return CURRENT_UHCUTILS_INSTANCE;
 	}
 
 	public static UHCPlayerManager getUHCPlayerManager() {
