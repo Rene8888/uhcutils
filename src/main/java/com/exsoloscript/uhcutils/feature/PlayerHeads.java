@@ -1,8 +1,5 @@
 package com.exsoloscript.uhcutils.feature;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -31,12 +28,7 @@ public class PlayerHeads extends Feature {
 			ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta hm = (SkullMeta) head.getItemMeta();
 			hm.setOwner(event.getEntity().getName());
-			List<ItemStack> tmp = new ArrayList<>(event.getDrops());
-			event.getDrops().clear();
-			event.getDrops().add(head);
-			for (ItemStack is : tmp) {
-				event.getDrops().add(is);
-			}
+			event.getDrops().add(0, head);
 		}
 	}
 }
