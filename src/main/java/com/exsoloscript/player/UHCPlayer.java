@@ -1,5 +1,9 @@
 package com.exsoloscript.player;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.HashSet;
@@ -51,15 +55,20 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
+import com.exsoloscript.player.exception.PlayerOfflineException;
+import com.exsoloscript.uhcutils.Util;
 import com.exsoloscript.uhcutils.team.Team;
 
-public class UHCPlayer implements Player {
+public class UHCPlayer implements Player, Externalizable {
 
 	private Player player;
 
 	private Team team;
 
+	private UUID uuid;
+
 	public UHCPlayer(Player player) {
+		this.uuid = player.getUniqueId();
 		this.player = player;
 	}
 
@@ -71,422 +80,453 @@ public class UHCPlayer implements Player {
 		this.team = team;
 	}
 
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(this.uuid);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		this.uuid = (UUID) in.readObject();
+	}
+
+	public Player getPlayer() {
+		if (this.player == null) {
+			Player p = Util.getPlayerByUUID(this.uuid);
+			if (p == null) {
+				throw new PlayerOfflineException("the player could not be found");
+			} else {
+				this.player = p;
+			}
+		}
+		return this.player;
+	}
+
+	public boolean equals(Object o) {
+		if (o instanceof UHCPlayer) {
+			UHCPlayer p = (UHCPlayer) o;
+			return p.getUniqueId().equals(this.getUniqueId());
+		} else {
+			return false;
+		}
+	}
+
 	public String getName() {
-		return player.getName();
+		return this.getPlayer().getName();
 	}
 
 	public String getDisplayName() {
-		return player.getDisplayName();
+		return this.getPlayer().getDisplayName();
 	}
 
 	public void setDisplayName(String dn) {
-		player.setDisplayName(dn);
+		this.getPlayer().setDisplayName(dn);
 	}
 
 	public String getPlayerListName() {
-		return player.getPlayerListName();
+		return this.getPlayer().getPlayerListName();
 	}
 
 	public void setPlayerListName(String ln) {
-		player.setPlayerListName(ln);
+		this.getPlayer().setPlayerListName(ln);
 	}
 
 	public Location getCompassTarget() {
-		return player.getCompassTarget();
+		return this.getPlayer().getCompassTarget();
 	}
 
 	public InetSocketAddress getAddress() {
-		return player.getAddress();
+		return this.getPlayer().getAddress();
 	}
 
 	public void sendRawMessage(String param) {
-		player.sendRawMessage(param);
+		this.getPlayer().sendRawMessage(param);
 	}
 
 	public void kickPlayer(String reason) {
-		player.kickPlayer(reason);
+		this.getPlayer().kickPlayer(reason);
 	}
 
 	public void chat(String param) {
-		player.chat(param);
+		this.getPlayer().chat(param);
 	}
 
 	public boolean performCommand(String param) {
-		return player.performCommand(param);
+		return this.getPlayer().performCommand(param);
 	}
 
 	public boolean isSneaking() {
-		return player.isSneaking();
+		return this.getPlayer().isSneaking();
 	}
 
 	public void closeInventory() {
-		player.closeInventory();
+		this.getPlayer().closeInventory();
 	}
 
 	public Inventory getEnderChest() {
-		return player.getEnderChest();
+		return this.getPlayer().getEnderChest();
 	}
 
 	public int getExpToLevel() {
-		return player.getExpToLevel();
+		return this.getPlayer().getExpToLevel();
 	}
 
 	public GameMode getGameMode() {
-		return player.getGameMode();
+		return this.getPlayer().getGameMode();
 	}
 
 	public PlayerInventory getInventory() {
-		return player.getInventory();
+		return this.getPlayer().getInventory();
 	}
 
 	public ItemStack getItemInHand() {
-		return player.getItemInHand();
+		return this.getPlayer().getItemInHand();
 	}
 
 	public ItemStack getItemOnCursor() {
-		return player.getItemOnCursor();
+		return this.getPlayer().getItemOnCursor();
 	}
 
 	public InventoryView getOpenInventory() {
-		return player.getOpenInventory();
+		return this.getPlayer().getOpenInventory();
 	}
 
 	public int getSleepTicks() {
-		return player.getSleepTicks();
+		return this.getPlayer().getSleepTicks();
 	}
 
 	public boolean isBlocking() {
-		return player.isBlocking();
+		return this.getPlayer().isBlocking();
 	}
 
 	public boolean isSleeping() {
-		return player.isSleeping();
+		return this.getPlayer().isSleeping();
 	}
 
 	public InventoryView openEnchanting(Location arg0, boolean arg1) {
-		return player.openEnchanting(arg0, arg1);
+		return this.getPlayer().openEnchanting(arg0, arg1);
 	}
 
 	public InventoryView openInventory(Inventory arg0) {
-		return player.openInventory(arg0);
+		return this.getPlayer().openInventory(arg0);
 	}
 
 	public void openInventory(InventoryView arg0) {
-		player.openInventory(arg0);
+		this.getPlayer().openInventory(arg0);
 	}
 
 	public InventoryView openWorkbench(Location arg0, boolean arg1) {
-		return player.openWorkbench(arg0, arg1);
+		return this.getPlayer().openWorkbench(arg0, arg1);
 	}
 
 	public void setGameMode(GameMode arg0) {
-		player.setGameMode(arg0);
+		this.getPlayer().setGameMode(arg0);
 	}
 
 	public void setItemInHand(ItemStack arg0) {
-		player.setItemInHand(arg0);
+		this.getPlayer().setItemInHand(arg0);
 	}
 
 	public void setItemOnCursor(ItemStack arg0) {
-		player.setItemOnCursor(arg0);
+		this.getPlayer().setItemOnCursor(arg0);
 	}
 
 	public boolean setWindowProperty(Property arg0, int arg1) {
-		return player.setWindowProperty(arg0, arg1);
+		return this.getPlayer().setWindowProperty(arg0, arg1);
 	}
 
 	public boolean addPotionEffect(PotionEffect arg0) {
-		return player.addPotionEffect(arg0);
+		return this.getPlayer().addPotionEffect(arg0);
 	}
 
 	public boolean addPotionEffect(PotionEffect arg0, boolean arg1) {
-		return player.addPotionEffect(arg0, arg1);
+		return this.getPlayer().addPotionEffect(arg0, arg1);
 	}
 
 	public boolean addPotionEffects(Collection<PotionEffect> arg0) {
-		return player.addPotionEffects(arg0);
+		return this.getPlayer().addPotionEffects(arg0);
 	}
 
 	public Collection<PotionEffect> getActivePotionEffects() {
-		return player.getActivePotionEffects();
+		return this.getPlayer().getActivePotionEffects();
 	}
 
 	public boolean getCanPickupItems() {
-		return player.getCanPickupItems();
+		return this.getPlayer().getCanPickupItems();
 	}
 
 	public String getCustomName() {
-		return player.getCustomName();
+		return this.getPlayer().getCustomName();
 	}
 
 	public EntityEquipment getEquipment() {
-		return player.getEquipment();
+		return this.getPlayer().getEquipment();
 	}
 
 	public double getEyeHeight() {
-		return player.getEyeHeight();
+		return this.getPlayer().getEyeHeight();
 	}
 
 	public double getEyeHeight(boolean arg0) {
-		return player.getEyeHeight(arg0);
+		return this.getPlayer().getEyeHeight(arg0);
 	}
 
 	public Location getEyeLocation() {
-		return player.getEyeLocation();
+		return this.getPlayer().getEyeLocation();
 	}
 
 	public Player getKiller() {
-		return player.getKiller();
+		return this.getPlayer().getKiller();
 	}
 
 	@Deprecated
 	public List<Block> getLastTwoTargetBlocks(HashSet<Byte> arg0, int arg1) {
-		return player.getLastTwoTargetBlocks(arg0, arg1);
+		return this.getPlayer().getLastTwoTargetBlocks(arg0, arg1);
 	}
 
 	public Entity getLeashHolder() throws IllegalStateException {
-		return player.getLeashHolder();
+		return this.getPlayer().getLeashHolder();
 	}
 
 	@Deprecated
 	public List<Block> getLineOfSight(HashSet<Byte> arg0, int arg1) {
-		return player.getLineOfSight(arg0, arg1);
+		return this.getPlayer().getLineOfSight(arg0, arg1);
 	}
 
 	public int getMaximumAir() {
-		return player.getMaximumAir();
+		return this.getPlayer().getMaximumAir();
 	}
 
 	public int getMaximumNoDamageTicks() {
-		return player.getMaximumNoDamageTicks();
+		return this.getPlayer().getMaximumNoDamageTicks();
 	}
 
 	public int getNoDamageTicks() {
-		return player.getNoDamageTicks();
+		return this.getPlayer().getNoDamageTicks();
 	}
 
 	public int getRemainingAir() {
-		return player.getRemainingAir();
+		return this.getPlayer().getRemainingAir();
 	}
 
 	public boolean getRemoveWhenFarAway() {
-		return player.getRemoveWhenFarAway();
+		return this.getPlayer().getRemoveWhenFarAway();
 	}
 
 	@Deprecated
 	public Block getTargetBlock(HashSet<Byte> arg0, int arg1) {
-		return player.getTargetBlock(arg0, arg1);
+		return this.getPlayer().getTargetBlock(arg0, arg1);
 	}
 
 	public boolean hasLineOfSight(Entity arg0) {
-		return player.hasLineOfSight(arg0);
+		return this.getPlayer().hasLineOfSight(arg0);
 	}
 
 	public boolean hasPotionEffect(PotionEffectType arg0) {
-		return player.hasPotionEffect(arg0);
+		return this.getPlayer().hasPotionEffect(arg0);
 	}
 
 	public boolean isCustomNameVisible() {
-		return player.isCustomNameVisible();
+		return this.getPlayer().isCustomNameVisible();
 	}
 
 	public boolean isLeashed() {
-		return player.isLeashed();
+		return this.getPlayer().isLeashed();
 	}
 
 	public <T extends Projectile> T launchProjectile(Class<? extends T> arg0) {
-		return player.launchProjectile(arg0);
+		return this.getPlayer().launchProjectile(arg0);
 	}
 
 	public void removePotionEffect(PotionEffectType arg0) {
-		player.removePotionEffect(arg0);
+		this.getPlayer().removePotionEffect(arg0);
 	}
 
 	public void setCanPickupItems(boolean arg0) {
-		player.setCanPickupItems(arg0);
+		this.getPlayer().setCanPickupItems(arg0);
 	}
 
 	public void setCustomName(String arg0) {
-		player.setCustomName(arg0);
+		this.getPlayer().setCustomName(arg0);
 	}
 
 	public void setCustomNameVisible(boolean arg0) {
-		player.setCustomNameVisible(arg0);
+		this.getPlayer().setCustomNameVisible(arg0);
 	}
 
 	public void setLastDamage(double arg0) {
-		player.setLastDamage(arg0);
+		this.getPlayer().setLastDamage(arg0);
 	}
 
 	public boolean setLeashHolder(Entity arg0) {
-		return player.setLeashHolder(arg0);
+		return this.getPlayer().setLeashHolder(arg0);
 	}
 
 	public void setMaximumAir(int arg0) {
-		player.setMaximumAir(arg0);
+		this.getPlayer().setMaximumAir(arg0);
 	}
 
 	public void setMaximumNoDamageTicks(int arg0) {
-		player.setMaximumNoDamageTicks(arg0);
+		this.getPlayer().setMaximumNoDamageTicks(arg0);
 	}
 
 	public void setNoDamageTicks(int arg0) {
-		player.setNoDamageTicks(arg0);
+		this.getPlayer().setNoDamageTicks(arg0);
 	}
 
 	public void setRemainingAir(int arg0) {
-		player.setRemainingAir(arg0);
+		this.getPlayer().setRemainingAir(arg0);
 	}
 
 	public void setRemoveWhenFarAway(boolean arg0) {
-		player.setRemoveWhenFarAway(arg0);
+		this.getPlayer().setRemoveWhenFarAway(arg0);
 	}
 
 	@Deprecated
 	public Arrow shootArrow() {
-		return player.shootArrow();
+		return this.getPlayer().shootArrow();
 	}
 
 	@Deprecated
 	public Egg throwEgg() {
-		return player.throwEgg();
+		return this.getPlayer().throwEgg();
 	}
 
 	@Deprecated
 	public Snowball throwSnowball() {
-		return player.throwSnowball();
+		return this.getPlayer().throwSnowball();
 	}
 
 	public boolean eject() {
-		return player.eject();
+		return this.getPlayer().eject();
 	}
 
 	public int getEntityId() {
-		return player.getEntityId();
+		return this.getPlayer().getEntityId();
 	}
 
 	public float getFallDistance() {
-		return player.getFallDistance();
+		return this.getPlayer().getFallDistance();
 	}
 
 	public int getFireTicks() {
-		return player.getFireTicks();
+		return this.getPlayer().getFireTicks();
 	}
 
 	public EntityDamageEvent getLastDamageCause() {
-		return player.getLastDamageCause();
+		return this.getPlayer().getLastDamageCause();
 	}
 
 	public Location getLocation() {
-		return player.getLocation();
+		return this.getPlayer().getLocation();
 	}
 
 	public Location getLocation(Location arg0) {
-		return player.getLocation(arg0);
+		return this.getPlayer().getLocation(arg0);
 	}
 
 	public int getMaxFireTicks() {
-		return player.getMaxFireTicks();
+		return this.getPlayer().getMaxFireTicks();
 	}
 
 	public List<Entity> getNearbyEntities(double arg0, double arg1, double arg2) {
-		return player.getNearbyEntities(arg0, arg1, arg2);
+		return this.getPlayer().getNearbyEntities(arg0, arg1, arg2);
 	}
 
 	public Entity getPassenger() {
-		return player.getPassenger();
+		return this.getPlayer().getPassenger();
 	}
 
 	public Server getServer() {
-		return player.getServer();
+		return this.getPlayer().getServer();
 	}
 
 	public int getTicksLived() {
-		return player.getTicksLived();
+		return this.getPlayer().getTicksLived();
 	}
 
 	public EntityType getType() {
-		return player.getType();
+		return this.getPlayer().getType();
 	}
 
 	public UUID getUniqueId() {
-		return player.getUniqueId();
+		return this.uuid;
 	}
 
 	public Entity getVehicle() {
-		return player.getVehicle();
+		return this.getPlayer().getVehicle();
 	}
 
 	public Vector getVelocity() {
-		return player.getVelocity();
+		return this.getPlayer().getVelocity();
 	}
 
 	public World getWorld() {
-		return player.getWorld();
+		return this.getPlayer().getWorld();
 	}
 
 	public boolean isDead() {
-		return player.isDead();
+		return this.getPlayer().isDead();
 	}
 
 	public boolean isEmpty() {
-		return player.isEmpty();
+		return this.getPlayer().isEmpty();
 	}
 
 	public boolean isInsideVehicle() {
-		return player.isInsideVehicle();
+		return this.getPlayer().isInsideVehicle();
 	}
 
 	public boolean isValid() {
-		return player.isValid();
+		return this.getPlayer().isValid();
 	}
 
 	public boolean leaveVehicle() {
-		return player.leaveVehicle();
+		return this.getPlayer().leaveVehicle();
 	}
 
 	public void playEffect(EntityEffect arg0) {
-		player.playEffect(arg0);
+		this.getPlayer().playEffect(arg0);
 	}
 
 	public void remove() {
-		player.remove();
+		this.getPlayer().remove();
 	}
 
 	public void setFallDistance(float arg0) {
-		player.setFallDistance(arg0);
+		this.getPlayer().setFallDistance(arg0);
 	}
 
 	public void setFireTicks(int arg0) {
-		player.setFireTicks(arg0);
+		this.getPlayer().setFireTicks(arg0);
 	}
 
 	public void setLastDamageCause(EntityDamageEvent arg0) {
-		player.setLastDamageCause(arg0);
+		this.getPlayer().setLastDamageCause(arg0);
 	}
 
 	public boolean setPassenger(Entity arg0) {
-		return player.setPassenger(arg0);
+		return this.getPlayer().setPassenger(arg0);
 	}
 
 	public void setTicksLived(int arg0) {
-		player.setTicksLived(arg0);
+		this.getPlayer().setTicksLived(arg0);
 	}
 
 	public void setVelocity(Vector arg0) {
-		player.setVelocity(arg0);
+		this.getPlayer().setVelocity(arg0);
 	}
 
 	public boolean teleport(Location arg0) {
-		return player.teleport(arg0);
+		return this.getPlayer().teleport(arg0);
 	}
 
 	public boolean teleport(Entity arg0) {
-		return player.teleport(arg0);
+		return this.getPlayer().teleport(arg0);
 	}
 
 	public boolean teleport(Location arg0, TeleportCause arg1) {
-		return player.teleport(arg0, arg1);
+		return this.getPlayer().teleport(arg0, arg1);
 	}
 
 	public boolean teleport(Entity arg0, TeleportCause arg1) {
@@ -494,448 +534,444 @@ public class UHCPlayer implements Player {
 	}
 
 	public List<MetadataValue> getMetadata(String arg0) {
-		return player.getMetadata(arg0);
+		return this.getPlayer().getMetadata(arg0);
 	}
 
 	public boolean hasMetadata(String arg0) {
-		return player.hasMetadata(arg0);
+		return this.getPlayer().hasMetadata(arg0);
 	}
 
 	public void removeMetadata(String arg0, Plugin arg1) {
-		player.removeMetadata(arg0, arg1);
+		this.getPlayer().removeMetadata(arg0, arg1);
 	}
 
 	public void setMetadata(String arg0, MetadataValue arg1) {
-		player.setMetadata(arg0, arg1);
+		this.getPlayer().setMetadata(arg0, arg1);
 	}
 
 	public void damage(double arg0) {
-		player.damage(arg0);
+		this.getPlayer().damage(arg0);
 	}
 
 	public void damage(double arg0, Entity arg1) {
-		player.damage(arg0, arg1);
+		this.getPlayer().damage(arg0, arg1);
 	}
 
 	public void resetMaxHealth() {
-		player.resetMaxHealth();
+		this.getPlayer().resetMaxHealth();
 	}
 
 	public void setHealth(double arg0) {
-		player.setHealth(arg0);
+		this.getPlayer().setHealth(arg0);
 	}
 
 	public void setMaxHealth(double arg0) {
-		player.setMaxHealth(arg0);
+		this.getPlayer().setMaxHealth(arg0);
 	}
 
 	public PermissionAttachment addAttachment(Plugin arg0) {
-		return player.addAttachment(arg0);
+		return this.getPlayer().addAttachment(arg0);
 	}
 
 	public PermissionAttachment addAttachment(Plugin arg0, int arg1) {
-		return player.addAttachment(arg0, arg1);
+		return this.getPlayer().addAttachment(arg0, arg1);
 	}
 
 	public PermissionAttachment addAttachment(Plugin arg0, String arg1, boolean arg2) {
-		return player.addAttachment(arg0, arg1, arg2);
+		return this.getPlayer().addAttachment(arg0, arg1, arg2);
 	}
 
 	public PermissionAttachment addAttachment(Plugin arg0, String arg1, boolean arg2, int arg3) {
-		return player.addAttachment(arg0, arg1, arg2, arg3);
+		return this.getPlayer().addAttachment(arg0, arg1, arg2, arg3);
 	}
 
 	public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-		return player.getEffectivePermissions();
+		return this.getPlayer().getEffectivePermissions();
 	}
 
 	public boolean hasPermission(String arg0) {
-		return player.hasPermission(arg0);
+		return this.getPlayer().hasPermission(arg0);
 	}
 
 	public boolean hasPermission(Permission arg0) {
-		return player.hasPermission(arg0);
+		return this.getPlayer().hasPermission(arg0);
 	}
 
 	public boolean isPermissionSet(String arg0) {
-		return player.isPermissionSet(arg0);
+		return this.getPlayer().isPermissionSet(arg0);
 	}
 
 	public boolean isPermissionSet(Permission arg0) {
-		return player.isPermissionSet(arg0);
+		return this.getPlayer().isPermissionSet(arg0);
 	}
 
 	public void recalculatePermissions() {
-		player.recalculatePermissions();
+		this.getPlayer().recalculatePermissions();
 	}
 
 	public void removeAttachment(PermissionAttachment arg0) {
-		player.removeAttachment(arg0);
+		this.getPlayer().removeAttachment(arg0);
 	}
 
 	public boolean isOp() {
-		return player.isOp();
+		return this.getPlayer().isOp();
 	}
 
 	public void setOp(boolean arg0) {
-		player.setOp(arg0);
+		this.getPlayer().setOp(arg0);
 	}
 
 	public void abandonConversation(Conversation arg0) {
-		player.abandonConversation(arg0);
+		this.getPlayer().abandonConversation(arg0);
 	}
 
 	public void abandonConversation(Conversation arg0, ConversationAbandonedEvent arg1) {
-		player.abandonConversation(arg0, arg1);
+		this.getPlayer().abandonConversation(arg0, arg1);
 	}
 
 	public void acceptConversationInput(String arg0) {
-		player.acceptConversationInput(arg0);
+		this.getPlayer().acceptConversationInput(arg0);
 	}
 
 	public boolean beginConversation(Conversation arg0) {
-		return player.beginConversation(arg0);
+		return this.getPlayer().beginConversation(arg0);
 	}
 
 	public boolean isConversing() {
-		return player.isConversing();
+		return this.getPlayer().isConversing();
 	}
 
 	public void sendMessage(String arg0) {
-		player.sendMessage(arg0);
+		this.getPlayer().sendMessage(arg0);
 	}
 
 	public void sendMessage(String[] arg0) {
-		player.sendMessage(arg0);
+		this.getPlayer().sendMessage(arg0);
 	}
 
 	public long getFirstPlayed() {
-		return player.getFirstPlayed();
+		return this.getPlayer().getFirstPlayed();
 	}
 
 	public long getLastPlayed() {
-		return player.getLastPlayed();
-	}
-
-	public Player getPlayer() {
-		return player.getPlayer();
+		return this.getPlayer().getLastPlayed();
 	}
 
 	public boolean hasPlayedBefore() {
-		return player.hasPlayedBefore();
+		return this.getPlayer().hasPlayedBefore();
 	}
 
 	public boolean isBanned() {
-		return player.isBanned();
+		return this.getPlayer().isBanned();
 	}
 
 	public boolean isOnline() {
-		return player.isOnline();
+		return this.getPlayer().isOnline();
 	}
 
 	public boolean isWhitelisted() {
-		return player.isWhitelisted();
+		return this.getPlayer().isWhitelisted();
 	}
 
 	public void setWhitelisted(boolean arg0) {
-		player.setWhitelisted(arg0);
+		this.getPlayer().setWhitelisted(arg0);
 	}
 
 	public Map<String, Object> serialize() {
-		return player.serialize();
+		return this.getPlayer().serialize();
 	}
 
 	public Set<String> getListeningPluginChannels() {
-		return player.getListeningPluginChannels();
+		return this.getPlayer().getListeningPluginChannels();
 	}
 
 	public void sendPluginMessage(Plugin arg0, String arg1, byte[] arg2) {
-		player.sendPluginMessage(arg0, arg1, arg2);
+		this.getPlayer().sendPluginMessage(arg0, arg1, arg2);
 	}
 
 	public void awardAchievement(Achievement arg0) {
-		player.awardAchievement(arg0);
+		this.getPlayer().awardAchievement(arg0);
 	}
 
 	public boolean getAllowFlight() {
-		return player.getAllowFlight();
+		return this.getPlayer().getAllowFlight();
 	}
 
 	public Location getBedSpawnLocation() {
-		return player.getBedSpawnLocation();
+		return this.getPlayer().getBedSpawnLocation();
 	}
 
 	public float getExhaustion() {
-		return player.getExhaustion();
+		return this.getPlayer().getExhaustion();
 	}
 
 	public float getExp() {
-		return player.getExp();
+		return this.getPlayer().getExp();
 	}
 
 	public float getFlySpeed() {
-		return player.getFlySpeed();
+		return this.getPlayer().getFlySpeed();
 	}
 
 	public int getFoodLevel() {
-		return player.getFoodLevel();
+		return this.getPlayer().getFoodLevel();
 	}
 
 	public double getHealthScale() {
-		return player.getHealthScale();
+		return this.getPlayer().getHealthScale();
 	}
 
 	public int getLevel() {
-		return player.getLevel();
+		return this.getPlayer().getLevel();
 	}
 
 	public long getPlayerTime() {
-		return player.getPlayerTime();
+		return this.getPlayer().getPlayerTime();
 	}
 
 	public long getPlayerTimeOffset() {
-		return player.getPlayerTimeOffset();
+		return this.getPlayer().getPlayerTimeOffset();
 	}
 
 	public WeatherType getPlayerWeather() {
-		return player.getPlayerWeather();
+		return this.getPlayer().getPlayerWeather();
 	}
 
 	public float getSaturation() {
-		return player.getSaturation();
+		return this.getPlayer().getSaturation();
 	}
 
 	public Scoreboard getScoreboard() {
-		return player.getScoreboard();
+		return this.getPlayer().getScoreboard();
 	}
 
 	public int getTotalExperience() {
-		return player.getTotalExperience();
+		return this.getPlayer().getTotalExperience();
 	}
 
 	public float getWalkSpeed() {
-		return player.getWalkSpeed();
+		return this.getPlayer().getWalkSpeed();
 	}
 
 	public void giveExp(int arg0) {
-		player.giveExp(arg0);
+		this.getPlayer().giveExp(arg0);
 	}
 
 	public void giveExpLevels(int arg0) {
-		player.giveExpLevels(arg0);
+		this.getPlayer().giveExpLevels(arg0);
 	}
 
 	public void incrementStatistic(Statistic arg0) {
-		player.incrementStatistic(arg0);
+		this.getPlayer().incrementStatistic(arg0);
 	}
 
 	public void incrementStatistic(Statistic arg0, int arg1) {
-		player.incrementStatistic(arg0, arg1);
+		this.getPlayer().incrementStatistic(arg0, arg1);
 	}
 
 	public void incrementStatistic(Statistic arg0, Material arg1) {
-		player.incrementStatistic(arg0, arg1);
+		this.getPlayer().incrementStatistic(arg0, arg1);
 	}
 
 	public void incrementStatistic(Statistic arg0, Material arg1, int arg2) {
-		player.incrementStatistic(arg0, arg1, arg2);
+		this.getPlayer().incrementStatistic(arg0, arg1, arg2);
 	}
 
 	public boolean isFlying() {
-		return player.isFlying();
+		return this.getPlayer().isFlying();
 	}
 
 	public boolean isHealthScaled() {
-		return player.isHealthScaled();
+		return this.getPlayer().isHealthScaled();
 	}
 
 	@Deprecated
 	public boolean isOnGround() {
-		return player.isOnGround();
+		return this.getPlayer().isOnGround();
 	}
 
 	public boolean isPlayerTimeRelative() {
-		return player.isPlayerTimeRelative();
+		return this.getPlayer().isPlayerTimeRelative();
 	}
 
 	public boolean isSleepingIgnored() {
-		return player.isSleepingIgnored();
+		return this.getPlayer().isSleepingIgnored();
 	}
 
 	public boolean isSprinting() {
-		return player.isSprinting();
+		return this.getPlayer().isSprinting();
 	}
 
 	public void loadData() {
-		player.loadData();
+		this.getPlayer().loadData();
 	}
 
 	@Deprecated
 	public void playEffect(Location arg0, Effect arg1, int arg2) {
-		player.playEffect(arg0, arg1, arg2);
+		this.getPlayer().playEffect(arg0, arg1, arg2);
 	}
 
 	public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
-		player.playEffect(arg0, arg1, arg2);
+		this.getPlayer().playEffect(arg0, arg1, arg2);
 	}
 
 	@Deprecated
 	public void playNote(Location arg0, byte arg1, byte arg2) {
-		player.playNote(arg0, arg1, arg2);
+		this.getPlayer().playNote(arg0, arg1, arg2);
 	}
 
 	public void playNote(Location arg0, Instrument arg1, Note arg2) {
-		player.playNote(arg0, arg1, arg2);
+		this.getPlayer().playNote(arg0, arg1, arg2);
 	}
 
 	public void playSound(Location arg0, Sound arg1, float arg2, float arg3) {
-		player.playSound(arg0, arg1, arg2, arg3);
+		this.getPlayer().playSound(arg0, arg1, arg2, arg3);
 	}
 
 	@Deprecated
 	public void playSound(Location arg0, String arg1, float arg2, float arg3) {
-		player.playSound(arg0, arg1, arg2, arg3);
+		this.getPlayer().playSound(arg0, arg1, arg2, arg3);
 	}
 
 	public void resetPlayerTime() {
-		player.resetPlayerTime();
+		this.getPlayer().resetPlayerTime();
 	}
 
 	public void resetPlayerWeather() {
-		player.resetPlayerWeather();
+		this.getPlayer().resetPlayerWeather();
 	}
 
 	public void saveData() {
-		player.saveData();
+		this.getPlayer().saveData();
 	}
 
 	@Deprecated
 	public void sendBlockChange(Location arg0, Material arg1, byte arg2) {
-		player.sendBlockChange(arg0, arg1, arg2);
+		this.getPlayer().sendBlockChange(arg0, arg1, arg2);
 	}
 
 	@Deprecated
 	public void sendBlockChange(Location arg0, int arg1, byte arg2) {
-		player.sendBlockChange(arg0, arg1, arg2);
+		this.getPlayer().sendBlockChange(arg0, arg1, arg2);
 	}
 
 	@Deprecated
 	public boolean sendChunkChange(Location arg0, int arg1, int arg2, int arg3, byte[] arg4) {
-		return player.sendChunkChange(arg0, arg1, arg2, arg3, arg4);
+		return this.getPlayer().sendChunkChange(arg0, arg1, arg2, arg3, arg4);
 	}
 
 	public void sendMap(MapView arg0) {
-		player.sendMap(arg0);
+		this.getPlayer().sendMap(arg0);
 	}
 
 	public void setAllowFlight(boolean arg0) {
-		player.setAllowFlight(arg0);
+		this.getPlayer().setAllowFlight(arg0);
 	}
 
 	public void setBedSpawnLocation(Location arg0) {
-		player.setBedSpawnLocation(arg0);
+		this.getPlayer().setBedSpawnLocation(arg0);
 	}
 
 	public void setBedSpawnLocation(Location arg0, boolean arg1) {
-		player.setBedSpawnLocation(arg0);
+		this.getPlayer().setBedSpawnLocation(arg0);
 	}
 
 	public void setCompassTarget(Location arg0) {
-		player.setCompassTarget(arg0);
+		this.getPlayer().setCompassTarget(arg0);
 	}
 
 	public void setExhaustion(float arg0) {
-		player.setExhaustion(arg0);
+		this.getPlayer().setExhaustion(arg0);
 	}
 
 	public void setExp(float arg0) {
-		player.setExp(arg0);
+		this.getPlayer().setExp(arg0);
 	}
 
 	public void setFlySpeed(float arg0) throws IllegalArgumentException {
-		player.setFlySpeed(arg0);
+		this.getPlayer().setFlySpeed(arg0);
 	}
 
 	public void setFlying(boolean arg0) {
-		player.setFlying(arg0);
+		this.getPlayer().setFlying(arg0);
 	}
 
 	public void setFoodLevel(int arg0) {
-		player.setFoodLevel(arg0);
+		this.getPlayer().setFoodLevel(arg0);
 	}
 
 	public void setHealthScale(double arg0) throws IllegalArgumentException {
-		player.setHealthScale(arg0);
+		this.getPlayer().setHealthScale(arg0);
 	}
 
 	public void setHealthScaled(boolean arg0) {
-		player.setHealthScaled(arg0);
+		this.getPlayer().setHealthScaled(arg0);
 	}
 
 	public void setLevel(int arg0) {
-		player.setLevel(arg0);
+		this.getPlayer().setLevel(arg0);
 	}
 
 	public void setPlayerTime(long arg0, boolean arg1) {
-		player.setPlayerTime(arg0, arg1);
+		this.getPlayer().setPlayerTime(arg0, arg1);
 	}
 
 	public void setPlayerWeather(WeatherType arg0) {
-		player.setPlayerWeather(arg0);
+		this.getPlayer().setPlayerWeather(arg0);
 	}
 
 	public void setSaturation(float arg0) {
-		player.setSaturation(arg0);
+		this.getPlayer().setSaturation(arg0);
 	}
 
 	public void setScoreboard(Scoreboard arg0) throws IllegalArgumentException, IllegalStateException {
-		player.setScoreboard(arg0);
+		this.getPlayer().setScoreboard(arg0);
 	}
 
 	public void setSleepingIgnored(boolean arg0) {
-		player.setSleepingIgnored(arg0);
+		this.getPlayer().setSleepingIgnored(arg0);
 	}
 
 	public void setSneaking(boolean arg0) {
-		player.setSneaking(arg0);
+		this.getPlayer().setSneaking(arg0);
 	}
 
 	public void setSprinting(boolean arg0) {
-		player.setSprinting(arg0);
+		this.getPlayer().setSprinting(arg0);
 	}
 
 	@Deprecated
 	public void setTexturePack(String arg0) {
-		player.setTexturePack(arg0);
+		this.getPlayer().setTexturePack(arg0);
 	}
 
 	public void setTotalExperience(int arg0) {
-		player.setTotalExperience(arg0);
+		this.getPlayer().setTotalExperience(arg0);
 	}
 
 	public void setWalkSpeed(float arg0) throws IllegalArgumentException {
-		player.setWalkSpeed(arg0);
+		this.getPlayer().setWalkSpeed(arg0);
 	}
 
 	@Deprecated
 	public void updateInventory() {
-		player.updateInventory();
+		this.getPlayer().updateInventory();
 	}
 
 	public boolean canSee(Player arg0) {
-		return player.canSee(arg0);
+		return this.getPlayer().canSee(arg0);
 	}
 
 	public void hidePlayer(Player arg0) {
-		player.hidePlayer(arg0);
+		this.getPlayer().hidePlayer(arg0);
 	}
 
 	public void setResourcePack(String arg0) {
-		player.setResourcePack(arg0);
+		this.getPlayer().setResourcePack(arg0);
 	}
 
 	public void showPlayer(Player arg0) {
-		player.showPlayer(arg0);
+		this.getPlayer().showPlayer(arg0);
 	}
 
 	public double getLastDamage() {
@@ -984,7 +1020,7 @@ public class UHCPlayer implements Player {
 
 	@Override
 	public <T extends Projectile> T launchProjectile(Class<? extends T> arg0, Vector arg1) {
-		return this.player.launchProjectile(arg0, arg1);
+		return this.getPlayer().launchProjectile(arg0, arg1);
 	}
 
 	@Override
@@ -994,82 +1030,82 @@ public class UHCPlayer implements Player {
 
 	@Override
 	public void decrementStatistic(Statistic arg0) throws IllegalArgumentException {
-		this.player.decrementStatistic(arg0);
+		this.getPlayer().decrementStatistic(arg0);
 	}
 
 	@Override
 	public void decrementStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-		this.player.decrementStatistic(arg0, arg1);
+		this.getPlayer().decrementStatistic(arg0, arg1);
 	}
 
 	@Override
 	public void decrementStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-		this.player.decrementStatistic(arg0, arg1);
+		this.getPlayer().decrementStatistic(arg0, arg1);
 	}
 
 	@Override
 	public void decrementStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-		this.player.decrementStatistic(arg0, arg1);
+		this.getPlayer().decrementStatistic(arg0, arg1);
 	}
 
 	@Override
 	public void decrementStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-		this.player.decrementStatistic(arg0, arg1, arg2);
+		this.getPlayer().decrementStatistic(arg0, arg1, arg2);
 	}
 
 	@Override
 	public void decrementStatistic(Statistic arg0, EntityType arg1, int arg2) {
-		this.player.decrementStatistic(arg0, arg1, arg2);
+		this.getPlayer().decrementStatistic(arg0, arg1, arg2);
 	}
 
 	@Override
 	public int getStatistic(Statistic arg0) throws IllegalArgumentException {
-		return this.player.getStatistic(arg0);
+		return this.getPlayer().getStatistic(arg0);
 	}
 
 	@Override
 	public int getStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-		return this.player.getStatistic(arg0, arg1);
+		return this.getPlayer().getStatistic(arg0, arg1);
 	}
 
 	@Override
 	public int getStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-		return this.player.getStatistic(arg0, arg1);
+		return this.getPlayer().getStatistic(arg0, arg1);
 	}
 
 	@Override
 	public boolean hasAchievement(Achievement arg0) {
-		return this.player.hasAchievement(arg0);
+		return this.getPlayer().hasAchievement(arg0);
 	}
 
 	@Override
 	public void incrementStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-		this.player.incrementStatistic(arg0, arg1);
+		this.getPlayer().incrementStatistic(arg0, arg1);
 	}
 
 	@Override
 	public void incrementStatistic(Statistic arg0, EntityType arg1, int arg2) throws IllegalArgumentException {
-		this.player.incrementStatistic(arg0, arg1, arg2);
+		this.getPlayer().incrementStatistic(arg0, arg1, arg2);
 	}
 
 	@Override
 	public void removeAchievement(Achievement arg0) {
-		this.player.removeAchievement(arg0);
+		this.getPlayer().removeAchievement(arg0);
 	}
 
 	@Override
 	public void setStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-		this.player.setStatistic(arg0, arg1);
+		this.getPlayer().setStatistic(arg0, arg1);
 	}
 
 	@Override
 	public void setStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-		this.player.setStatistic(arg0, arg1, arg2);
+		this.getPlayer().setStatistic(arg0, arg1, arg2);
 	}
 
 	@Override
 	public void setStatistic(Statistic arg0, EntityType arg1, int arg2) {
-		this.player.setStatistic(arg0, arg1, arg2);
+		this.getPlayer().setStatistic(arg0, arg1, arg2);
 	}
 
 }
