@@ -1,6 +1,7 @@
 package com.exsoloscript.uhcutils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +16,9 @@ public class UHCutils extends JavaPlugin {
 
 	private static UHCPlayerManager UHC_PLAYER_MANAGER;
 	private static Teams UHC_TEAMS;
+	
+	private static FileConfiguration config;
+	private static JavaPlugin plugin;
 
 	public void onEnable() {
 
@@ -27,6 +31,12 @@ public class UHCutils extends JavaPlugin {
 
 		int pl = this.getConfig().getInt("config.max-players");
 		maxPlayers = pl;
+		
+		FileConfiguration fc = this.getConfig();
+		config = fc;
+		
+		JavaPlugin plug = this;
+		plugin = plug;
 	}
 
 	public void onDisable() {
@@ -57,5 +67,12 @@ public class UHCutils extends JavaPlugin {
 	public static Teams getTeams() {
 		return UHC_TEAMS;
 	}
+	
+	public static FileConfiguration getMainConfig() {
+		return config;
+	}
 
+	public static JavaPlugin getPlugin() {
+		return plugin;
+	}
 }

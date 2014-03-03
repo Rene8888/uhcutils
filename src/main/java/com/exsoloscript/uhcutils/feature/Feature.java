@@ -8,10 +8,8 @@ public abstract class Feature implements Listener {
 	private String name;
 	private String description;
 	
-	public Feature(boolean defaultEnabled, String name, String desc) {
+	public Feature(boolean defaultEnabled) {
 		this.enabled = defaultEnabled;
-		this.name = name;
-		this.description = desc;
 	}
 	
 	public abstract void enable();

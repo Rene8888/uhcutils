@@ -20,8 +20,10 @@ import org.bukkit.potion.PotionEffectType;
 
 public class GoldenHead extends Feature {
 
-	public GoldenHead(boolean defaultEnabled, String name, String desc) {
-		super(defaultEnabled, name, desc);
+	public GoldenHead(boolean defaultEnabled) {
+		super(defaultEnabled);
+		this.setName("GoldenHeads");
+		this.setDescription("Better golden apples!");
 	}
 
 	public void enable() {
