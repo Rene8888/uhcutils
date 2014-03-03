@@ -13,9 +13,11 @@ public class WitchSpawn extends Feature {
 		this.setDescription("Allows natural witch spawns");
 	}
 
-	public void enable() {}
+	public void enable() {
+	}
 
-	public void disable() {}
+	public void disable() {
+	}
 
 	@EventHandler
 	public void onCreatureSpawn(CreatureSpawnEvent event) {

@@ -6,11 +6,12 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
 public class PlayerListener {
-	
+
 	@EventHandler
 	public void onPlayerRegainHealth(EntityRegainHealthEvent event) {
 		if (event.getEntityType() == EntityType.PLAYER) {
-			if (event.getRegainReason() == RegainReason.SATIATED) event.setCancelled(true);
+			if (event.getRegainReason() == RegainReason.SATIATED)
+				event.setCancelled(true);
 		}
 	}
 }

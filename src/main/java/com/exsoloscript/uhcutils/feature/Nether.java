@@ -13,18 +13,18 @@ public class Nether extends Feature {
 	}
 
 	public void enable() {
-		
+
 	}
 
 	public void disable() {
-		
+
 	}
 
 	@EventHandler
 	public void onEntityPortal(EntityPortalEvent event) {
 		if (event.getTo().getWorld().getEnvironment() == Environment.THE_END)
 			event.setCancelled(true);
-		
+
 		if (isEnabled()) {
 			if (event.getTo().getWorld().getEnvironment() == Environment.NETHER)
 				event.setCancelled(true);

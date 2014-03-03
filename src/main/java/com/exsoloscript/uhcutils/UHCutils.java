@@ -16,7 +16,7 @@ public class UHCutils extends JavaPlugin {
 
 	private static UHCPlayerManager UHC_PLAYER_MANAGER;
 	private static Teams UHC_TEAMS;
-	
+
 	private static FileConfiguration config;
 	private static JavaPlugin plugin;
 
@@ -31,10 +31,10 @@ public class UHCutils extends JavaPlugin {
 
 		int pl = this.getConfig().getInt("config.max-players");
 		maxPlayers = pl;
-		
+
 		FileConfiguration fc = this.getConfig();
 		config = fc;
-		
+
 		JavaPlugin plug = this;
 		plugin = plug;
 	}
@@ -67,7 +67,7 @@ public class UHCutils extends JavaPlugin {
 	public static Teams getTeams() {
 		return UHC_TEAMS;
 	}
-	
+
 	public static FileConfiguration getMainConfig() {
 		return config;
 	}
