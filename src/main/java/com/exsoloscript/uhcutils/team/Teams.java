@@ -92,6 +92,15 @@ public class Teams implements Externalizable {
 		}
 	}
 
+	public Team getTeamByID(int id) {
+		for (Team t : this.teams) {
+			if (t.getTeamNumber() == id) {
+				return t;
+			}
+		}
+		return null;
+	}
+
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeInt(this.teams.size());
 		for (Team team : this.teams) {
