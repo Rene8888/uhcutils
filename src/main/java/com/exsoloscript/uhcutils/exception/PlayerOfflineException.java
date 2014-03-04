@@ -1,4 +1,4 @@
-package com.exsoloscript.player.exception;
+package com.exsoloscript.uhcutils.exception;
 
 public class PlayerOfflineException extends RuntimeException {
 

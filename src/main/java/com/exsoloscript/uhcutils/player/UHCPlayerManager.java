@@ -1,4 +1,4 @@
-package com.exsoloscript.player;
+package com.exsoloscript.uhcutils.player;
 
 import java.util.HashMap;
 

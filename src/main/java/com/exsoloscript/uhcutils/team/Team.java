@@ -6,7 +6,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 
-import com.exsoloscript.player.UHCPlayer;
+import com.exsoloscript.uhcutils.player.UHCPlayer;
 
 public class Team implements Externalizable {
 

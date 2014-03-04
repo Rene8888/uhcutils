@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import com.exsoloscript.player.UHCPlayer;
 import com.exsoloscript.uhcutils.UHCutils;
+import com.exsoloscript.uhcutils.player.UHCPlayer;
 import com.exsoloscript.uhcutils.timer.DeathBanTimer;
 
 public class DeathBan extends Feature {

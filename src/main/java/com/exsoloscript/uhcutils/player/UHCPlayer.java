@@ -1,4 +1,4 @@
-package com.exsoloscript.player;
+package com.exsoloscript.uhcutils.player;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -55,8 +55,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
-import com.exsoloscript.player.exception.PlayerOfflineException;
 import com.exsoloscript.uhcutils.Util;
+import com.exsoloscript.uhcutils.exception.PlayerOfflineException;
 import com.exsoloscript.uhcutils.team.Team;
 
 public class UHCPlayer implements Player, Externalizable {
