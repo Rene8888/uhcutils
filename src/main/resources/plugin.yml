@@ -14,3 +14,6 @@ commands:
   byebye:
     usage: /byebye <playerName>
     description: bans a player
+  feature:
+    usage: /feature <args>
+    description: feature commands
