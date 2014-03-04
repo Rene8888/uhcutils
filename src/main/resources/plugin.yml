@@ -2,15 +2,21 @@ name: UHCutils
 version: 1.0
 description: UHCutils Plugin
 author: EXSolo
+authors: [EXSolo, Rene8888]
 main: com.exsoloscript.uhcutils.UHCutils
+
 database: false
+
 commands:
   canjoin:
     usage: /canjoin
     description: Shows how many players can join
-  whitelistall:
-    usage: /whitelistall [clear]
-    description: whitelists all players
   byebye:
     usage: /byebye <playerName>
     description: bans a player
+  join:
+    usage: /join <team, player> <teamID, playerName>
+    description: puts you in the specified team or creates a new one
+  feature:
+    usage: /feature <list, toggle> <feature>
+    description: lists all features or toggles them on or of

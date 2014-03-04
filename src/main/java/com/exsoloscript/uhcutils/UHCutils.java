@@ -5,7 +5,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.exsoloscript.uhcutils.cmd.FeatureCommands;
 import com.exsoloscript.uhcutils.cmd.JoinCommands;
+import com.exsoloscript.uhcutils.cmd.TeamCommands;
 import com.exsoloscript.uhcutils.event.LoginListener;
 import com.exsoloscript.uhcutils.feature.FeatureManager;
 import com.exsoloscript.uhcutils.player.UHCPlayerManager;
@@ -55,7 +57,9 @@ public class UHCutils extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		new JoinCommands(this);
+		new JoinCommands();
+		new TeamCommands();
+		new FeatureCommands();
 	}
 
 	public static String prefix() {

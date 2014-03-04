@@ -11,12 +11,8 @@ import com.exsoloscript.uhcutils.team.Team;
 
 public class TeamCommands extends AbstractCommand {
 
-	@SuppressWarnings("unused")
-	private UHCutils plugin;
-
-	public TeamCommands(UHCutils u) {
-		super(u, "");
-		this.plugin = u;
+	public TeamCommands() {
+		super(UHCutils.getUHCutils(), "join");
 	}
 
 	@Override

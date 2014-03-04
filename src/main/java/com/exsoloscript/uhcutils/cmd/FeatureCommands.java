@@ -2,17 +2,19 @@ package com.exsoloscript.uhcutils.cmd;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.exsoloscript.uhcutils.UHCutils;
 import com.exsoloscript.uhcutils.feature.Feature;
 
-public class FeatureCommands implements CommandExecutor {
+public class FeatureCommands extends AbstractCommand {
+
+	public FeatureCommands() {
+		super(UHCutils.getUHCutils(), "feature");
+	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
 		if (label.equalsIgnoreCase("feature")) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
