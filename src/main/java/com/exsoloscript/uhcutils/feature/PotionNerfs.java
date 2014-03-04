@@ -55,7 +55,7 @@ public class PotionNerfs extends Feature {
 			ItemStack localItemStack = event.getItem();
 			if (localItemStack.getType().equals(Material.GOLDEN_APPLE)) {
 				final String name = event.getPlayer().getName();
-				Bukkit.getScheduler().scheduleSyncDelayedTask(UHCutils.getPlugin(), new Runnable() {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(UHCutils.getUHCutils(), new Runnable() {
 					public void run() {
 						Player p = Bukkit.getPlayerExact(name);
 						p.removePotionEffect(PotionEffectType.ABSORPTION);
