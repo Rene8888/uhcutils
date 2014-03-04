@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.exsoloscript.player.UHCPlayerManager;
 import com.exsoloscript.uhcutils.cmd.JoinCommands;
 import com.exsoloscript.uhcutils.event.LoginListener;
+import com.exsoloscript.uhcutils.feature.FeatureManager;
 import com.exsoloscript.uhcutils.team.Teams;
 
 public class UHCutils extends JavaPlugin {
@@ -20,17 +21,16 @@ public class UHCutils extends JavaPlugin {
 
 	private static FileConfiguration config;
 	private static JavaPlugin plugin;
+	private static FeatureManager manager;
 
 	public void onEnable() {
 
 		CURRENT_UHCUTILS_INSTANCE = this;
 		UHC_PLAYER_MANAGER = new UHCPlayerManager(this);
 		UHC_TEAMS = new Teams();
-
-		loadConfig();
-		registerEvents();
-		registerCommands();
-
+		
+		manager = new FeatureManager();
+		
 		int pl = this.getConfig().getInt("config.max-players");
 		maxPlayers = pl;
 
@@ -39,6 +39,10 @@ public class UHCutils extends JavaPlugin {
 
 		JavaPlugin plug = this;
 		plugin = plug;
+		
+		loadConfig();
+		registerEvents();
+		registerCommands();
 	}
 
 	public void onDisable() {
@@ -80,5 +84,9 @@ public class UHCutils extends JavaPlugin {
 
 	public static JavaPlugin getPlugin() {
 		return plugin;
+	}
+	
+	public static FeatureManager getFeatureManager() {
+		return manager;
 	}
 }
