@@ -1,6 +1,6 @@
 package com.exsoloscript.uhcutils.timer;
 
-import com.exsoloscript.player.UHCPlayer;
+import com.exsoloscript.uhcutils.player.UHCPlayer;
 
 public class DeathBanTimer implements Runnable {
 
