@@ -18,6 +18,8 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.exsoloscript.uhcutils.UHCutils;
+
 public class GoldenHead extends Feature {
 
 	public GoldenHead(boolean defaultEnabled) {
@@ -55,7 +57,8 @@ public class GoldenHead extends Feature {
 		ItemMeta im = is.getItemMeta();
 		if (im.hasDisplayName() && im.getDisplayName().equals(ChatColor.GOLD + "Golden Head")) {
 			event.getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
-			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100 * 25, 1));
+			int extra = UHCutils.getMainConfig().getInt("feature.golden-heads.heal");
+			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100 + extra * 25, 1));
 		}
 	}
 

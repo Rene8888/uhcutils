@@ -19,7 +19,7 @@ public class DeathDrops extends Feature {
 		super(paramBoolean);
 		this.setName("DeathDrops");
 		this.setDescription("Adds extra loot to players on death");
-		ConfigurationSection featureSection = UHCutils.getMainConfig().getConfigurationSection("features.deathDrops.items");
+		ConfigurationSection featureSection = UHCutils.getMainConfig().getConfigurationSection("feature.death-drops.items");
 		for (String item : featureSection.getKeys(false)) {
 			ConfigurationSection itemSection = featureSection.getConfigurationSection(item);
 			String name = itemSection.getString("name");
