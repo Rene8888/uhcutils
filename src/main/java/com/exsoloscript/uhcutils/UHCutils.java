@@ -5,7 +5,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.exsoloscript.uhcutils.cmd.FeatureCommands;
 import com.exsoloscript.uhcutils.cmd.JoinCommands;
+import com.exsoloscript.uhcutils.cmd.TeamCommands;
 import com.exsoloscript.uhcutils.event.LoginListener;
 import com.exsoloscript.uhcutils.feature.FeatureManager;
 import com.exsoloscript.uhcutils.player.UHCPlayerManager;
@@ -18,28 +20,24 @@ public class UHCutils extends JavaPlugin {
 	private static UHCutils CURRENT_UHCUTILS_INSTANCE;
 	private static UHCPlayerManager UHC_PLAYER_MANAGER;
 	private static Teams UHC_TEAMS;
+	private static Game UHC_GAME;
 
-	private static FileConfiguration config;
-	private static JavaPlugin plugin;
-	private static FeatureManager manager;
+	private static FileConfiguration UHC_CONFIG;
+	private static FeatureManager UHC_FEATURE_MANAGER;
 
 	public void onEnable() {
 
 		CURRENT_UHCUTILS_INSTANCE = this;
 		UHC_PLAYER_MANAGER = new UHCPlayerManager(this);
 		UHC_TEAMS = new Teams();
-		
-		manager = new FeatureManager();
-		
+		UHC_FEATURE_MANAGER = new FeatureManager();
+
 		int pl = this.getConfig().getInt("config.max-players");
 		maxPlayers = pl;
 
 		FileConfiguration fc = this.getConfig();
-		config = fc;
+		UHC_CONFIG = fc;
 
-		JavaPlugin plug = this;
-		plugin = plug;
-		
 		loadConfig();
 		registerEvents();
 		registerCommands();
@@ -59,7 +57,9 @@ public class UHCutils extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		new JoinCommands(this);
+		new JoinCommands();
+		new TeamCommands();
+		new FeatureCommands();
 	}
 
 	public static String prefix() {
@@ -79,14 +79,14 @@ public class UHCutils extends JavaPlugin {
 	}
 
 	public static FileConfiguration getMainConfig() {
-		return config;
+		return UHC_CONFIG;
 	}
 
-	public static JavaPlugin getPlugin() {
-		return plugin;
-	}
-	
 	public static FeatureManager getFeatureManager() {
-		return manager;
+		return UHC_FEATURE_MANAGER;
+	}
+
+	public static Game getGame() {
+		return UHC_GAME;
 	}
 }

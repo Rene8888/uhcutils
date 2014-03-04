@@ -62,10 +62,11 @@ import com.exsoloscript.uhcutils.team.Team;
 public class UHCPlayer implements Player, Externalizable {
 
 	private Player player;
+	private UUID uuid;
 
 	private Team team;
 
-	private UUID uuid;
+	private boolean adminMode;
 
 	public UHCPlayer(Player player) {
 		this.uuid = player.getUniqueId();
@@ -78,6 +79,14 @@ public class UHCPlayer implements Player, Externalizable {
 
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+
+	public void setAdminMode(boolean mode) {
+		this.adminMode = mode;
+	}
+
+	public boolean isAdminMode() {
+		return this.adminMode;
 	}
 
 	@Override

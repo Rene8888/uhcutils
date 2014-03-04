@@ -61,7 +61,7 @@ public class PlayerList extends Feature {
 	}
 
 	public void enable() {
-		task_id = Bukkit.getScheduler().scheduleSyncRepeatingTask(UHCutils.getPlugin(), new Runnable() {
+		task_id = Bukkit.getScheduler().scheduleSyncRepeatingTask(UHCutils.getUHCutils(), new Runnable() {
 			public void run() {
 				PlayerList.updatePlayers(Bukkit.getOnlinePlayers());
 			}

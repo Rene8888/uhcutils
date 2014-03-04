@@ -13,12 +13,8 @@ import com.exsoloscript.uhcutils.Util;
 
 public class JoinCommands extends AbstractCommand {
 
-	@SuppressWarnings("unused")
-	private UHCutils plugin;
-
-	public JoinCommands(UHCutils u) {
-		super(u, "coinjoin", "byebye");
-		this.plugin = u;
+	public JoinCommands() {
+		super(UHCutils.getUHCutils(), "coinjoin", "byebye");
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

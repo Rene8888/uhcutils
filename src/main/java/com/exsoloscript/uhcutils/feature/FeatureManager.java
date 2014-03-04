@@ -29,7 +29,7 @@ public class FeatureManager {
 	
 	public void registerEvents() {
 		for (Feature f : features) {
-			Bukkit.getPluginManager().registerEvents(f, UHCutils.getPlugin());
+			Bukkit.getPluginManager().registerEvents(f, UHCutils.getUHCutils());
 		}
 	}
 	

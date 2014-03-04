@@ -30,6 +30,6 @@ public class DeathBan extends Feature {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(UHCutils.getPlugin(), new DeathBanTimer(new UHCPlayer(event.getEntity()), timeUntilBan), 0L, 20L);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(UHCutils.getUHCutils(), new DeathBanTimer(new UHCPlayer(event.getEntity()), timeUntilBan), 0L, 20L);
 	}
 }
