@@ -68,6 +68,8 @@ public class UHCPlayer implements Player, Externalizable {
 
 	private boolean adminMode;
 
+	private boolean isInGame;
+
 	public UHCPlayer(Player player) {
 		this.uuid = player.getUniqueId();
 		this.player = player;
@@ -87,6 +89,14 @@ public class UHCPlayer implements Player, Externalizable {
 
 	public boolean isAdminMode() {
 		return this.adminMode;
+	}
+
+	public void setIsInGame(boolean b) {
+		this.isInGame = b;
+	}
+
+	public boolean isInGame() {
+		return this.isInGame;
 	}
 
 	@Override
