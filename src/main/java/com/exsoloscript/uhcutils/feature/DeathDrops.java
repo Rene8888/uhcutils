@@ -25,26 +25,29 @@ public class DeathDrops extends Feature {
 			String name = itemSection.getString("name");
 			String sAmount = itemSection.getString("amount");
 			String sChance = itemSection.getString("chance");
-			
-			if (name == null) continue;
-			if (sAmount == null) sAmount = "1";
-			if (sChance == null) sChance = "100";
-			
+
+			if (name == null)
+				continue;
+			if (sAmount == null)
+				sAmount = "1";
+			if (sChance == null)
+				sChance = "100";
+
 			int amount = 0;
 			int chance = 0;
-			
+
 			ItemDrop drop = null;
-			
+
 			try {
 				amount = Integer.parseInt(sAmount);
 				chance = Integer.parseInt(sChance);
-				
+
 				drop = new ItemDrop().setItem(Material.getMaterial(name)).setAmount(amount).setChance(chance);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println("Unable to load DeathDrop item: " + name + ":" + sAmount + " (" + chance + "%)");
 				continue;
 			}
-			
+
 			drops.add(drop);
 		}
 	}
@@ -63,17 +66,17 @@ public class DeathDrops extends Feature {
 		}
 	}
 
-	public void enable() {}
+	public void enable() {
+	}
 
-	public void disable() {}
+	public void disable() {
+	}
 
 	public class ItemDrop {
 		private Material item;
 		private int amount = 0;
 		private int meta;
 		private int chance = 0;
-
-		
 
 		public int getAmount() {
 			return this.amount;
@@ -112,7 +115,7 @@ public class DeathDrops extends Feature {
 		}
 
 		public ItemStack getItemStack() {
-				return new ItemStack(item, amount, (short) meta);
+			return new ItemStack(item, amount, (short) meta);
 		}
 	}
 }

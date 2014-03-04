@@ -12,7 +12,7 @@ import com.exsoloscript.uhcutils.timer.DeathBanTimer;
 public class DeathBan extends Feature {
 
 	private int timeUntilBan = 30;
-	
+
 	public DeathBan(boolean defaultEnabled) {
 		super(defaultEnabled);
 		this.setName("DeathBan");
@@ -21,14 +21,14 @@ public class DeathBan extends Feature {
 	}
 
 	public void enable() {
-		
+
 	}
 
 	public void disable() {
-		
+
 	}
 
-	@EventHandler(priority=EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(UHCutils.getPlugin(), new DeathBanTimer(new UHCPlayer(event.getEntity()), timeUntilBan), 0L, 20L);
 	}

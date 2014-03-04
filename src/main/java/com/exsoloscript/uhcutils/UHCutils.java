@@ -14,14 +14,16 @@ public class UHCutils extends JavaPlugin {
 
 	public static int maxPlayers = 0;
 
+	private static UHCutils CURRENT_UHCUTILS_INSTANCE;
 	private static UHCPlayerManager UHC_PLAYER_MANAGER;
 	private static Teams UHC_TEAMS;
-	
+
 	private static FileConfiguration config;
 	private static JavaPlugin plugin;
 
 	public void onEnable() {
 
+		CURRENT_UHCUTILS_INSTANCE = this;
 		UHC_PLAYER_MANAGER = new UHCPlayerManager(this);
 		UHC_TEAMS = new Teams();
 
@@ -31,10 +33,10 @@ public class UHCutils extends JavaPlugin {
 
 		int pl = this.getConfig().getInt("config.max-players");
 		maxPlayers = pl;
-		
+
 		FileConfiguration fc = this.getConfig();
 		config = fc;
-		
+
 		JavaPlugin plug = this;
 		plugin = plug;
 	}
@@ -60,6 +62,10 @@ public class UHCutils extends JavaPlugin {
 		return ChatColor.AQUA + "[UHCu] " + ChatColor.GOLD;
 	}
 
+	public static UHCutils getUHCutils() {
+		return CURRENT_UHCUTILS_INSTANCE;
+	}
+
 	public static UHCPlayerManager getUHCPlayerManager() {
 		return UHC_PLAYER_MANAGER;
 	}
@@ -67,7 +73,7 @@ public class UHCutils extends JavaPlugin {
 	public static Teams getTeams() {
 		return UHC_TEAMS;
 	}
-	
+
 	public static FileConfiguration getMainConfig() {
 		return config;
 	}
