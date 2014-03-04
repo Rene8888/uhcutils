@@ -12,7 +12,9 @@ public abstract class AbstractCommand implements CommandExecutor {
 	public AbstractCommand(JavaPlugin jp, String... commands) {
 		this.jp = jp;
 		for (String command : commands) {
-			this.jp.getCommand(command).setExecutor(this);
+			if (command != null && command.equals("") == true) {
+				this.jp.getCommand(command).setExecutor(this);
+			}
 		}
 	}
 
