@@ -16,7 +16,8 @@ public class PlayerList extends Feature {
 	private static int task_id = -1;
 	private static WeakHashMap<Player, Double> players = new WeakHashMap<Player, Double>();
 	private static final int health_scaling = UHCutils.getMainConfig().getInt("feature.player-list-health.scaling");
-//	private static final boolean round_health = UHCutils.getMainConfig().getBoolean("feature.player-list-health.round-health");
+	// private static final boolean round_health =
+	// UHCutils.getMainConfig().getBoolean("feature.player-list-health.round-health");
 	private static Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
 	private static Objective obj_player_list = null;
 	private static Objective obj_player_name = null;
@@ -42,8 +43,8 @@ public class PlayerList extends Feature {
 			listName = listName.substring(0, Math.min(listName.length(), 16));
 		}
 		player.setPlayerListName(listName);
-//		if (round_health)
-//			int health = Math.ceil(player.getHealth());
+		// if (round_health)
+		// int health = Math.ceil(player.getHealth());
 		obj_player_list.getScore(Bukkit.getOfflinePlayer(listName)).setScore((int) (player.getHealth() * health_scaling));
 		obj_player_name.getScore(Bukkit.getOfflinePlayer(ChatColor.stripColor(player.getDisplayName()))).setScore((int) (player.getHealth() * health_scaling));
 	}

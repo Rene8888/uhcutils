@@ -35,12 +35,13 @@ public class Nether extends Feature {
 				event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
 		if (UHCutils.getMainConfig().getBoolean("feature.nether.spawn-zombie-pigmen"))
 			if (event.getEntityType() == EntityType.PIG_ZOMBIE) {
-				if (event.getSpawnReason() == SpawnReason.NATURAL) event.setCancelled(true);
+				if (event.getSpawnReason() == SpawnReason.NATURAL)
+					event.setCancelled(true);
 			}
 	}
 }

@@ -13,11 +13,11 @@ public class Regeneration extends Feature {
 	}
 
 	public void enable() {
-		
+
 	}
 
 	public void disable() {
-		
+
 	}
 
 	@EventHandler

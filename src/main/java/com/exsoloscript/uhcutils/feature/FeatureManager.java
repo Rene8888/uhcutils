@@ -9,7 +9,7 @@ import com.exsoloscript.uhcutils.UHCutils;
 public class FeatureManager {
 
 	private FeatureList features = new FeatureList();
-	
+
 	public FeatureManager() {
 		this.features.add(new DeathBan(UHCutils.getMainConfig().getBoolean("feature.death-ban.enabled")));
 		this.features.add(new DeathDrops(UHCutils.getMainConfig().getBoolean("feature.death-ban.enabled")));
@@ -26,25 +26,26 @@ public class FeatureManager {
 		this.features.add(new Regeneration(UHCutils.getMainConfig().getBoolean("feature.regeneration.enabled")));
 		this.features.add(new WitchSpawn(UHCutils.getMainConfig().getBoolean("feature.witch-spawn.enabled")));
 	}
-	
+
 	public void registerEvents() {
 		for (Feature f : features) {
 			Bukkit.getPluginManager().registerEvents(f, UHCutils.getUHCutils());
 		}
 	}
-	
+
 	public Feature getForName(String name) {
 		for (Feature f : features) {
-			if (f.getName().equalsIgnoreCase(name)) return f;
+			if (f.getName().equalsIgnoreCase(name))
+				return f;
 		}
-		
+
 		return null;
 	}
-	
+
 	public FeatureList getFeatureList() {
 		return this.features;
 	}
-	
+
 	public class FeatureList extends ArrayList<Feature> {
 		private static final long serialVersionUID = 4226684108981462769L;
 	}

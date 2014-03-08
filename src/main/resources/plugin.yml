@@ -19,3 +19,7 @@ commands:
     description: puts you in the specified team or creates a new one
   feature:
     usage: /feature <list, toggle> <feature>
+    description: lists all the features
+  start:
+    usage: /start
+    description: starts the game

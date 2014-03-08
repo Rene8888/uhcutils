@@ -40,29 +40,27 @@ public class FeatureCommands extends AbstractCommand {
 						}
 					}
 				} else {
-					if (!player.isOp()) player.sendMessage(ChatColor.GOLD + featuresToString());
+					if (!player.isOp())
+						player.sendMessage(ChatColor.GOLD + featuresToString());
 					else {
-						player.sendMessage(ChatColor.RED + "Too few arguments: \n" + 
-										   " - /feature toggle <feature> \n" + 
-										   " - /feature list");
+						player.sendMessage(ChatColor.RED + "Too few arguments: \n" + " - /feature toggle <feature> \n" + " - /feature list");
 					}
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
 	public String featuresToString() {
 		String ret = "";
-		
+
 		for (Feature f : UHCutils.getFeatureManager().getFeatureList()) {
-			ret += " - " + f.getName() + ": " + f.isEnabled() + "\n" +
-				   "   " + f.getDescription() + "\n";
+			ret += " - " + f.getName() + ": " + f.isEnabled() + "\n" + "   " + f.getDescription() + "\n";
 		}
-		
+
 		return ret;
 	}
-	
+
 }

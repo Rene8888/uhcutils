@@ -12,11 +12,11 @@ public class DeathLightning extends Feature {
 	}
 
 	public void enable() {
-		
+
 	}
 
 	public void disable() {
-		
+
 	}
 
 	@EventHandler
