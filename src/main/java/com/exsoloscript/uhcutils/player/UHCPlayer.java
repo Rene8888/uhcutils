@@ -1127,4 +1127,9 @@ public class UHCPlayer implements Player, Externalizable {
 		this.getPlayer().setStatistic(arg0, arg1, arg2);
 	}
 
+	@Override
+	public void sendSignChange(Location arg0, String[] arg1) throws IllegalArgumentException {
+		this.getPlayer().sendSignChange(arg0, arg1);
+	}
+
 }
